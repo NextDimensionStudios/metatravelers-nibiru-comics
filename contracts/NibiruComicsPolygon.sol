@@ -52,7 +52,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     mapping(address => uint256) public _whitelistQuantity;
 
-    constructor() ERC721("Nibiru Comics", "NBRUCOM") {}
+    constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
 
     function addToWhitelist(
         address[] calldata addresses,
