@@ -50,20 +50,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     bool public paused = true;
 
-    mapping(address => uint256) public _whitelistQuantity;
-
     constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
-
-    function addToWhitelist(
-        address[] calldata addresses,
-        uint256[] calldata quantities
-    ) external onlyOwner {
-        require(addresses.length == quantities.length);
-        for (uint256 i = 0; i < addresses.length; i++) {
-            require(addresses[i] != address(0), "Cannot add null address");
-            _whitelistQuantity[addresses[i]] = quantities[i];
-        }
-    }
 
     function totalSupply() external view returns (uint256) {
         return supply.current();
