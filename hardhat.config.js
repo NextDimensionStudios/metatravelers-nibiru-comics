@@ -1,6 +1,5 @@
 require('@nomiclabs/hardhat-waffle')
 require('@nomiclabs/hardhat-web3')
-require('dotenv').config()
 require('@nomiclabs/hardhat-etherscan')
 
 /**
@@ -14,10 +13,9 @@ module.exports = {
 			url: 'https://rpc-mumbai.maticvigil.com',
 			accounts: [''],
 		},
-
 		matic: {
 			url: 'https://polygon-rpc.com/',
-			accounts: [],
+			accounts: [''],
 		},
 	},
 	etherscan: {
