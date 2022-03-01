@@ -1,15 +1,22 @@
-# Basic Sample Hardhat Project
-
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
+# Smart Contract for MetaTravelers Nibiru Comics on Polygon
 
 ```shell
-npx hardhat accounts
 npx hardhat compile
-npx hardhat clean
+```
+
+```shell
 npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+```
+
+To run scripts on a specific network:
+
+```
+npx hardhat run scripts/SCRIPT_NAME.js --network NETWORK_NAME
+```
+
+To verify on Etherscan (needs an Etherscan API key):
+
+```
+npx hardhat verify --network NETWORK_NAME DEPLOYED_CONTRACT_ADDRESS
+
 ```
