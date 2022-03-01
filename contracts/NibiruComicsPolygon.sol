@@ -97,7 +97,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
     }
 
     function tokenURI(uint256 _tokenId)
-        external
+        public
         view
         virtual
         override
