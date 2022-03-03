@@ -48,8 +48,6 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     uint256 public maxSupply;
 
-    bool public paused = true;
-
     address[] public whitelistAddresses;
     uint256[] public whitelistAmounts;
 
@@ -134,20 +132,6 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         uriSuffix = _uriSuffix;
     }
 
-    function setPaused(bool _state) external onlyOwner {
-        paused = _state;
-    }
-
-    function _mintLoop(
-        address[] memory _addresses,
-        uint256[] memory _amounts,
-        uint256 _collectionAmount
-    ) external onlyOwner {
-        for (uint256 i = 0; i < _collectionAmount; i++) {
-            _mintForAddress(_addresses[i], _amounts[i]);
-        }
-    }
-
     function _mintForAddress(address _receiver, uint256 _mintAmount)
         public
         onlyOwner
@@ -155,6 +139,20 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         for (uint256 i = 0; i < _mintAmount; i++) {
             supply.increment();
             _safeMint(_receiver, supply.current());
+        }
+    }
+
+    function _mintLoop(
+        address[] memory _addresses,
+        uint256[] memory _amounts,
+        uint256 _collectionAmount
+    ) external onlyOwner {
+        require(
+            _addresses.length == _amounts.length,
+            "addresses and amounts must be the same length"
+        );
+        for (uint256 i = 0; i < _collectionAmount; i++) {
+            _mintForAddress(_addresses[i], _amounts[i]);
         }
     }
 
