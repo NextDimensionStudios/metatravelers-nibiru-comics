@@ -50,6 +50,9 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     bool public paused = true;
 
+    address[] public whitelistAddresses;
+    uint256[] public whitelistAmounts;
+
     constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
 
     function totalSupply() external view returns (uint256) {
@@ -108,6 +111,17 @@ contract NibiruComicsPolygon is ERC721, Ownable {
                 : "";
     }
 
+    function setWhitelistAddresses(address[] memory _addresses)
+        external
+        onlyOwner
+    {
+        whitelistAddresses = _addresses;
+    }
+
+    function setWhitelistAmounts(uint256[] memory _amounts) external onlyOwner {
+        whitelistAmounts = _amounts;
+    }
+
     function setMaxSupply(uint256 _maxSupply) external onlyOwner {
         maxSupply = _maxSupply;
     }
@@ -124,8 +138,18 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         paused = _state;
     }
 
-    function _mintLoop(address _receiver, uint256 _mintAmount)
-        external
+    function _mintLoop(
+        address[] memory _addresses,
+        uint256[] memory _amounts,
+        uint256 _collectionAmount
+    ) external onlyOwner {
+        for (uint256 i = 0; i < _collectionAmount; i++) {
+            _mintForAddress(_addresses[i], _amounts[i]);
+        }
+    }
+
+    function _mintForAddress(address _receiver, uint256 _mintAmount)
+        public
         onlyOwner
     {
         for (uint256 i = 0; i < _mintAmount; i++) {
