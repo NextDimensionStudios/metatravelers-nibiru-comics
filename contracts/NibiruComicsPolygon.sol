@@ -53,7 +53,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
 
-    function totalSupply() external view returns (uint256) {
+    function totalSupply() public view returns (uint256) {
         return supply.current();
     }
 
@@ -137,6 +137,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         onlyOwner
     {
         for (uint256 i = 0; i < _mintAmount; i++) {
+            require(supply.current() < maxSupply);
             supply.increment();
             _safeMint(_receiver, supply.current());
         }
