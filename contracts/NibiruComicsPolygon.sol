@@ -44,7 +44,6 @@ contract NibiruComicsPolygon is ERC721, Ownable {
     Counters.Counter private supply;
 
     string public uriPrefix = "";
-    string public uriSuffix = ".json";
 
     uint256 public maxSupply;
 
@@ -112,10 +111,6 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     function setUriPrefix(string memory _uriPrefix) external onlyOwner {
         uriPrefix = _uriPrefix;
-    }
-
-    function setUriSuffix(string memory _uriSuffix) external onlyOwner {
-        uriSuffix = _uriSuffix;
     }
 
     function _mintLoop(address[] memory _receivers, uint256 _mintAmount)
