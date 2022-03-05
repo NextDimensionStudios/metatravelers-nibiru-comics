@@ -95,13 +95,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         string memory currentBaseURI = _baseURI();
         return
             bytes(currentBaseURI).length > 0
-                ? string(
-                    abi.encodePacked(
-                        currentBaseURI,
-                        _tokenId.toString(),
-                        uriSuffix
-                    )
-                )
+                ? string(abi.encodePacked(currentBaseURI, _tokenId.toString()))
                 : "";
     }
 
@@ -113,14 +107,14 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         uriPrefix = _uriPrefix;
     }
 
-    function _mintLoop(address[] memory _receivers, uint256 _mintAmount)
+    function _mintLoop(address _receiver, uint256 _mintAmount)
         public
         onlyOwner
     {
         for (uint256 i = 0; i < _mintAmount; i++) {
             require(supply.current() < maxSupply);
             supply.increment();
-            _safeMint(_receivers[i], supply.current());
+            _safeMint(_receiver, supply.current());
         }
     }
 
