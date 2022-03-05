@@ -108,7 +108,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
     }
 
     function _mintLoop(address _receiver, uint256 _mintAmount)
-        public
+        external
         onlyOwner
     {
         for (uint256 i = 0; i < _mintAmount; i++) {
