@@ -1,19 +1,12 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
 const hre = require('hardhat')
 
-async function main() {
-	// Hardhat always runs the compile task when running scripts with its command
-	// line interface.
-	//
-	// If this script is run directly using `node` you may want to call compile
-	// manually to make sure everything is compiled
-	// await hre.run('compile');
+const whitelist = [
+	['0x307919c85E1545C2AA2f6276dA1B60DB04648A71', 10],
+	['0x3e4EfeB5BC5f67D8B61EAee5aC61cac6b6ff31E3', 5],
+	['0x1e19AF366e564055E3973952459B2f39d05F1eda', 7],
+]
 
-	// We get the contract to deploy
+async function main() {
 	const ComicsFactory = await hre.ethers.getContractFactory(
 		'NibiruComicsPolygon'
 	)
@@ -22,10 +15,16 @@ async function main() {
 	await comics.deployed()
 
 	console.log('Nibiru Comics deployed to:', comics.address)
+
+	for (const [address, amount] of whitelist) {
+		let txn = await comics._mintLoop(address, amount)
+
+		await txn.wait()
+
+		console.log('Minted NFT(s) for', address)
+	}
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
 	.then(() => process.exit(0))
 	.catch(error => {
