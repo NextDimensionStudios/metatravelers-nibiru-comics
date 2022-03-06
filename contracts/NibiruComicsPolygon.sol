@@ -45,7 +45,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
     string public uriPrefix = "";
 
-    uint256 public maxSupply = 500;
+    uint256 public maxSupply;
 
     constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
 
