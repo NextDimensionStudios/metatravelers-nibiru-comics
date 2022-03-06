@@ -10,8 +10,14 @@ module.exports = {
 	networks: {
 		hardhat: {},
 		mumbai: {
-			url: 'https://rpc-mumbai.maticvigil.com',
+			url: '',
 			accounts: [''],
+		},
+		rinkeby: {
+			url: '',
+			accounts: [''],
+			gas: 2100000,
+			gasPrice: 8000000000,
 		},
 		matic: {
 			url: 'https://polygon-rpc.com/',
