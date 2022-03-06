@@ -16,12 +16,16 @@ async function main() {
 
 	console.log('Nibiru Comics deployed to:', comics.address)
 
+	// set tokenURI here
+
 	for (const [address, amount] of whitelist) {
-		let txn = await comics._mintLoop(address, amount)
-
-		await txn.wait()
-
-		console.log('Minted NFT(s) for', address)
+		try {
+			let txn = await comics._mintLoop(address, amount)
+			await txn.wait()
+			console.log('Minted NFT(s) for', address)
+		} catch (error) {
+			console.error(error)
+		}
 	}
 }
 
