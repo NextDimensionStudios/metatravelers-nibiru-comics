@@ -62,7 +62,7 @@ describe('Comics', () => {
         expect(await comics.totalSupply()).to.eq(11);
     });
 
-    it('should retun the ownedTokenIds when walletOfOwner is called', async () => {
+    it('should return the ownedTokenIds when walletOfOwner is called', async () => {
         const quantity = 3;
         await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
         await comics.connect(owner)._mintLoop(address1.address, quantity);
@@ -71,4 +71,39 @@ describe('Comics', () => {
             expect(tokens[i]).to.eq(i + 1);
         }
     });
+
+
+    it('should revert if non-owner tries to set base token URI', async () => {
+        const baseTokenUri = 'newBaseTokenURI/';
+        await expectRevert(
+            comics.connect(address1).setUriPrefix(baseTokenUri),
+            'Ownable: caller is not the owner'
+        );
+    });
+
+    it('should return the correnct tokenURI', async () => {
+        const quantity = 3;
+        const baseTokenUri = 'newBaseTokenURI/';
+        await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
+        await comics.connect(owner).setUriPrefix(baseTokenUri);
+        await comics.connect(owner)._mintLoop(address1.address, quantity);
+        for(let i = 0; i < quantity; i++) {
+            expect(await comics.tokenURI(i + 1)).to.eq(baseTokenUri + String(i + 1));
+        }
+    });
+
+    it('should update the uriPrefix to the expected value', async () => {
+        const baseTokenUri = 'newBaseTokenURI/';
+        expect(await comics.uriPrefix()).to.eq('');
+        await comics.connect(owner).setUriPrefix(baseTokenUri);
+        expect(await comics.uriPrefix()).to.eq(baseTokenUri);
+    });
+
+    it('should revert if the provided tokenId does not exist', async () => {
+        await expectRevert(
+            comics.tokenURI(0),
+            'ERC721Metadata: URI query for nonexistent token'
+        );
+    });
+    
 });
