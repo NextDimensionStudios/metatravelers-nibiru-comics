@@ -119,7 +119,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         onlyOwner
     {
         for (uint256 i = 0; i < _mintAmount; i++) {
-            require(supply.current() < maxSupply);
+            require(supply.current() < maxSupply, "Minting supply limit reached");
             supply.increment();
             _safeMint(_receiver, supply.current());
         }
