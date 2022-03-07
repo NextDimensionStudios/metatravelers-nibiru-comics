@@ -25,7 +25,7 @@ describe('Comics', () => {
         );
     });
 
-    it('should revert when minting, if maxSupply is not set', async () => {
+    it('should revert when minting, if exceeds maxSupply', async () => {
         await expectRevert(
             comics.connect(owner)._mintLoop(address1.address, 1),
             'Minting supply limit reached'
@@ -72,31 +72,30 @@ describe('Comics', () => {
         }
     });
 
-
     it('should revert if non-owner tries to set base token URI', async () => {
-        const baseTokenUri = 'newBaseTokenURI/';
+        const uriPrefix = 'newUriPrefix/';
         await expectRevert(
-            comics.connect(address1).setUriPrefix(baseTokenUri),
+            comics.connect(address1).setUriPrefix(uriPrefix),
             'Ownable: caller is not the owner'
         );
     });
 
-    it('should return the correnct tokenURI', async () => {
+    it('should return the correct tokenURI', async () => {
         const quantity = 3;
-        const baseTokenUri = 'newBaseTokenURI/';
+        const uriPrefix = 'newUriPrefix/';
         await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
-        await comics.connect(owner).setUriPrefix(baseTokenUri);
+        await comics.connect(owner).setUriPrefix(uriPrefix);
         await comics.connect(owner)._mintLoop(address1.address, quantity);
         for(let i = 0; i < quantity; i++) {
-            expect(await comics.tokenURI(i + 1)).to.eq(baseTokenUri + String(i + 1));
+            expect(await comics.tokenURI(i + 1)).to.eq(uriPrefix + String(i + 1));
         }
     });
 
     it('should update the uriPrefix to the expected value', async () => {
-        const baseTokenUri = 'newBaseTokenURI/';
+        const uriPrefix = 'newUriPrefix/';
         expect(await comics.uriPrefix()).to.eq('');
-        await comics.connect(owner).setUriPrefix(baseTokenUri);
-        expect(await comics.uriPrefix()).to.eq(baseTokenUri);
+        await comics.connect(owner).setUriPrefix(uriPrefix);
+        expect(await comics.uriPrefix()).to.eq(uriPrefix);
     });
 
     it('should revert if the provided tokenId does not exist', async () => {
