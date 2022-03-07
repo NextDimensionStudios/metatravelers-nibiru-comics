@@ -52,10 +52,23 @@ describe('Comics', () => {
 
     it('should return the correct totalSupply()', async () => {
         await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
+
+        expect(await comics.totalSupply()).to.eq(0);
+
         await comics.connect(owner)._mintLoop(address1.address, 1);
         expect(await comics.totalSupply()).to.eq(1);
 
         await comics.connect(owner)._mintLoop(address1.address, 10);
         expect(await comics.totalSupply()).to.eq(11);
+    });
+
+    it('should retun the ownedTokenIds when walletOfOwner is called', async () => {
+        const quantity = 3;
+        await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
+        await comics.connect(owner)._mintLoop(address1.address, quantity);
+        const tokens = await comics.walletOfOwner(address1.address);
+        for(let i = 0; i < quantity; i++) {
+            expect(tokens[i]).to.eq(i + 1);
+        }
     });
 });
