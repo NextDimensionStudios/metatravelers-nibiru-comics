@@ -44,6 +44,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
     Counters.Counter private supply;
 
     string public uriPrefix = "";
+    string public uriSuffix = ".json";
 
     uint256 public maxSupply;
 
@@ -95,7 +96,13 @@ contract NibiruComicsPolygon is ERC721, Ownable {
         string memory currentBaseURI = _baseURI();
         return
             bytes(currentBaseURI).length > 0
-                ? string(abi.encodePacked(currentBaseURI, _tokenId.toString()))
+                ? string(
+                    abi.encodePacked(
+                        currentBaseURI,
+                        _tokenId.toString(),
+                        uriSuffix
+                    )
+                )
                 : "";
     }
 
