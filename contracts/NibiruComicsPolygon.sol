@@ -46,7 +46,7 @@ contract NibiruComicsPolygon is ERC721, Ownable {
     string public uriPrefix = "";
     uint256 public maxSupply;
 
-    constructor() ERC721("Metatravelers: Nibiru Comics", "NBRUCOM") {}
+    constructor() ERC721("Metatravelers: Nibiru Comics", "NIBIRUCOMICS") {}
 
     function totalSupply() public view returns (uint256) {
         return supply.current();
@@ -69,7 +69,6 @@ contract NibiruComicsPolygon is ERC721, Ownable {
 
             if (currentTokenOwner == _owner) {
                 ownedTokenIds[ownedTokenIndex] = currentTokenId;
-
                 ownedTokenIndex++;
             }
 
