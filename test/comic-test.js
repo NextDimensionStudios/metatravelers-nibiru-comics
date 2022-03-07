@@ -18,6 +18,20 @@ describe('Comics', () => {
         await comics.deployed();
     });
 
+    it('should revert if non-owner tries to mint', async () => {
+        await expectRevert(
+            comics.connect(address1)._mintLoop(address1.address, 1),
+            'Ownable: caller is not the owner'
+        );
+    });
+
+    it('should revert when minting, if maxSupply is not set', async () => {
+        await expectRevert(
+            comics.connect(owner)._mintLoop(address1.address, 1),
+            'Minting supply limit reached'
+        );
+    });
+
     it('should revert if non-owner calls setMaxSupply', async () => {
         await expectRevert(
             comics.connect(address1).setMaxSupply(MAX_SUPPLY),
@@ -30,4 +44,18 @@ describe('Comics', () => {
         expect(await comics.maxSupply()).to.eq(MAX_SUPPLY);
     });
 
+    it('should allow owner to mint a comic to a specified address', async () => {
+        await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
+        await comics.connect(owner)._mintLoop(address1.address, 1);
+        expect(await comics.balanceOf(address1.address)).to.eq(1);
+    });
+
+    it('should return the correct totalSupply()', async () => {
+        await comics.connect(owner).setMaxSupply(MAX_SUPPLY);
+        await comics.connect(owner)._mintLoop(address1.address, 1);
+        expect(await comics.totalSupply()).to.eq(1);
+
+        await comics.connect(owner)._mintLoop(address1.address, 10);
+        expect(await comics.totalSupply()).to.eq(11);
+    });
 });
