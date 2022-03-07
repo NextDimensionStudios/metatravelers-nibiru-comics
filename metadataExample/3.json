@@ -1,0 +1,22 @@
+{
+	"description": "Dive into the lore of the MetaTravelers: Nibiru through collectible comic NFTs, and witness the origin story of the first guild unfold.\n\nEach NFT unlocks pages viewable in the MetaTravelers Dashboard, which can be found at https://metatravelers.io",
+	"external_url": "https://metatravelers.io",
+	"image": "ipfs://QmXRwdTCXDjhRUDBKZ5FHpX4pLUn9KyTMDaqhzKCz2z6vq",
+	"name": "MetaTravelers: Nibiru Comics Episode #1 Serial #1",
+	"attributes": [
+		{
+			"trait_type": "Rarity",
+			"value": "Original"
+		},
+		{
+			"trait_type": "Episode",
+			"value": "3"
+		},
+		{
+			"trait_type": "Serial Number",
+			"value": "1",
+			"display_type": "number",
+			"max_value": "500"
+		}
+	]
+}
