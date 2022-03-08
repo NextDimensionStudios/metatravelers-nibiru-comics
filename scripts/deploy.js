@@ -1,7 +1,7 @@
 const hre = require('hardhat');
 
 async function main() {
-    const tokenURI = 'ipfs://QmbmwzNK3adHuMkM1BFdqEdp7e7Le8W7SCUpGyZ7PfSyDD/';
+    const tokenURI = 'ipfs://QmP1X3QvaWGDcbgSPcjzu1P2RgBmoi1QJ5xfR3B7cPikr9/';
     const maxSupply = '500';
 
     // Deploy the contract
