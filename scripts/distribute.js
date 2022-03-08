@@ -1,18 +1,19 @@
 const { ethers } = require('hardhat');
 const csv = require('csvtojson');
+const BigNumber = require('@ethersproject/bignumber').BigNumber;
 
 async function main() {
-    const address = '0x0165878A594ca255338adfa4d48449f69242Eb8F';
-    const csvPath = './data/MetaTravelers Comics Minting List - Testing.csv';
+    const contractAddress = '';
+    const csvPath = './data/<MintingListName>.csv';
     const users = await csv().fromFile(csvPath);
     const Comics = await ethers.getContractFactory('NibiruComicsPolygon');
-    const comics = await Comics.attach(address);
+    const comics = await Comics.attach(contractAddress);
     
     // loop through whitelist and mint tokens
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         try {
-            let txn = await comics._mintLoop(user.Address, user.Quantity);
+            let txn = await comics._mintLoop(user.Address, user.Quantity, { gasLimit: BigNumber.from('800000') });
             await txn.wait();
             console.log(`Minted ${user.Quantity} NFT(s) for ${user.Address}`);
         } catch (error) {
