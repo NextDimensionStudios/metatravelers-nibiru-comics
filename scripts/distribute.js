@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { ethers } = require('hardhat');
 const csv = require('csvtojson');
 const BigNumber = require('@ethersproject/bignumber').BigNumber;
@@ -17,9 +18,13 @@ async function main() {
                 gasLimit: BigNumber.from('1000000'),
             });
             await waitForTrnx(txn.hash);
-            console.log(`${i}. Minted ${user.Quantity} NFT(s) for ${user.Address}`);
+            console.log(`${i + 2}. Minted ${user.Quantity} NFT(s) for ${user.Address}`);
+            fs.appendFileSync('distribute_log.txt', `${i}. Minted ${user.Quantity} NFT(s) for ${user.Address}\n`, function (err) {
+                if (err) throw err;
+            });
         } catch (error) {
             console.error(error);
+            fs.appendFileSync('distribute_log.txt', error);
         }
     }
 }
@@ -38,6 +43,7 @@ async function waitForTrnx(hash) {
     if (receipt.status != 1) {
         const errMessage = `Error minting, stopping. Hash: ${hash}`;
         console.log(errMessage);
+        fs.appendFileSync('distribute_log.txt', errMessage);
         throw new Error(errMessage);
     }
 }
