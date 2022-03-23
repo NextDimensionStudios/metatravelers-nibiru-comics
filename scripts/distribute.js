@@ -1,12 +1,12 @@
 const fs = require('fs');
-const wait = require('wait');
+// const wait = require('wait');
 const { ethers } = require('hardhat');
 const csv = require('csvtojson');
 // const BigNumber = require('@ethersproject/bignumber').BigNumber;
 
 async function main() {
     const contractAddress = '0xa772A8C5Bb0D9723E3aF07652c0d6AD1C5BD4830';
-    const csvPath = './data/MetaTravelers_Comics_Minting_List_-_Episode_2_V3.csv';
+    const csvPath = './data/MetaTravelers_Comics_Minting_List_-_Episode_2_Final.csv';
     const users = await csv().fromFile(csvPath);
     const Comics = await ethers.getContractFactory('NibiruComicsPolygon');
     const comics = await Comics.attach(contractAddress);
@@ -24,7 +24,7 @@ async function main() {
             fs.appendFileSync('distribute_log.txt', `${i + 2}. Minted ${user.Quantity} NFT(s) for ${user.Address}\n`, function (err) {
                 if (err) throw err;
             });
-            await wait(9000);
+            // await wait(9000);
         } catch (error) {
             console.error(error);
             fs.appendFileSync('distribute_log.txt', 'missing\n', function (err) {
