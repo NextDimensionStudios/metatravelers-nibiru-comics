@@ -4,7 +4,7 @@ const csv = require('csvtojson');
 
 async function main() {
     const contractAddress = '0xa772A8C5Bb0D9723E3aF07652c0d6AD1C5BD4830';
-    const csvPath = './data/MetaTravelers_Comics_Minting_List_-_Episode_4_Initial.csv';
+    const csvPath = './data/MetaTravelers_Comics_Minting_List_-_Episode_5_Initial.csv';
     const users = await csv().fromFile(csvPath);
     const Comics = await ethers.getContractFactory('NibiruComicsPolygon');
     const comics = await Comics.attach(contractAddress);
